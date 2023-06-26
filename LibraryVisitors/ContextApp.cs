@@ -2,10 +2,11 @@
 
 namespace LibraryVisitors
 {
-    public class ContextApp: DbContext
+    public sealed class ContextApp: DbContext
     {
         public ContextApp() 
-        { 
+        {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -16,5 +17,7 @@ namespace LibraryVisitors
 
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Style> Сategories { get; set; }
     }
 }

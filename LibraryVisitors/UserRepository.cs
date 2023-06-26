@@ -2,30 +2,30 @@
 {
     public class UserRepository
     {
-        private readonly ContextApp ContextApp;
+        private readonly ContextApp _contextApp;
         public UserRepository(ContextApp contextApp) 
         {
-            ContextApp = contextApp;
+            _contextApp = contextApp;
         }
 
         public List<User> LibraryUser()
         {
-            var model = ContextApp.Users.ToList();
+            var model = _contextApp.Users.ToList();
             try
             {
                 return model;
             }
             catch (Exception e) 
             {
-                System.Console.WriteLine(e);
-                return null!;
+                Console.WriteLine(e);
+                throw;
             }
         }
 
         public User SelectUser(int id)
         {
-            var model = ContextApp.Users.Find(id);
-            if(model != null)
+            var model = _contextApp.Users.Find(id);
+            if(model != default)
             {
                 return model!;
             }
@@ -38,38 +38,40 @@
 
         public void CreateUser(User user)
         {
-            var model = ContextApp.Users.FirstOrDefault(user);
-            if(model == default) 
+            var model = _contextApp.Users.First(f=>string.Equals(f.Name!, user.Name!, StringComparison.CurrentCultureIgnoreCase) 
+                                                   && string.Equals(f.Email!, user.Email!, StringComparison.CurrentCultureIgnoreCase));
+            if(model.Id == default) 
             {
-                ContextApp.Users.Add(model!);
-                ContextApp.SaveChanges();
+                _contextApp.Users.Add(model);
+                _contextApp.SaveChanges();
             }
             else
             {
                 Console.WriteLine("Пользователь с таким именем уже зарегестрирован");
             }
         }
-        public void RemoveUser(User user) 
+        public void RemoveUser(int id) 
         {
-            var model = ContextApp.Users.FirstOrDefault(user);
-            if(model != null) 
+            var model = _contextApp.Users.Find(id);
+            if(model != default) 
             {
-                ContextApp.Users.Remove(model!);
-                ContextApp.SaveChanges();
+                _contextApp.Users.Remove(model);
+                _contextApp.SaveChanges();
             }
             else
             {
                 Console.WriteLine("Подльзователь не найден");
             }
         }
-        public void UpdateUser(int id, string name)
+        public void UpdateUser(int id, string? name, string? email)
         {
-            var model = ContextApp.Users.Find(id);
-            if(model!=null)
+            var model = _contextApp.Users.Find(id);
+            if(model != default)
             {
-                model.Name = name;
-                ContextApp.Users.Update(model);
-                ContextApp.SaveChanges();
+                model.Name = name ?? model.Name;
+                model.Email = email ?? model.Email;
+                _contextApp.Users.Update(model);
+                _contextApp.SaveChanges();
             }
             else
             {
