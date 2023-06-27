@@ -15,9 +15,9 @@
             {
                 return model;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -25,20 +25,20 @@
         public Book SelectBook(int id)
         {
             var model = _contextApp.Books.Find(id);
-            if (model != null)
+            try
             {
-                return model;
+                return model!;
             }
-            else
+            catch (Exception ex)
             {
-                var book = new Book { Name = "Книга отсутствует" };
-                return book;
+                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
         public void CreateBoook(Book book)
         {
-            var model = _contextApp.Books.First(f => string.Equals(f.Name!, book.Name!, StringComparison.CurrentCultureIgnoreCase) 
+            var model = _contextApp.Books.First(f => string.Equals(f.Name!, book.Name!, StringComparison.CurrentCultureIgnoreCase)
                                                      && f.Date == book.Date);
             if (model.Id == default)
             {
@@ -76,6 +76,20 @@
                 _contextApp.SaveChanges();
             }
         }
-        
+
+        public List<Book> FindBookStyleToDate(int idStyle, DateTime date)
+        {
+            var model = _contextApp.Books.Where(w => w.StyleId == idStyle && w.Date == date).ToList();
+            try
+            {
+                return model;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
     }
 }

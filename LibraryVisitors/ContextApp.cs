@@ -19,5 +19,20 @@ namespace LibraryVisitors
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Style> Сategories { get; set; }
+        public DbSet<BookToAutors> BookToAutors { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<BookToAutors>()
+            //    .HasKey(hk => new { hk.AutorId, hk.BookId });
+            //modelBuilder.Entity<BookToAutors>()
+            //    .HasOne(ho => ho.Author)
+            //    .WithMany(wm => wm.BookToAutors)
+            //    .HasForeignKey(hfk => hfk.AutorId);
+            //modelBuilder.Entity<BookToAutors>()
+            //    .HasOne(ho => ho.Book)
+            //    .WithMany(wm => wm.BookToAutors)
+            //    .HasForeignKey(hfk => hfk.BookId);
+        }
     }
 }

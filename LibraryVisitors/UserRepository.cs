@@ -25,14 +25,14 @@
         public User SelectUser(int id)
         {
             var model = _contextApp.Users.Find(id);
-            if(model != default)
+            try
             {
                 return model!;
             }
-            else
+            catch (Exception e) 
             {
-                var user = new User { Name = "пользователь отсутствут", Email = "Email отсутствует" };
-                return user;
+                Console.WriteLine(e);
+                throw;
             }
         }
 
