@@ -10,10 +10,10 @@
         public User? User { get; set; }
         public int StyleId { get; set; }
         public Style? Style { get; set; }
-        public List<BookToAutors> BookToAutors { get; set; }
+        public List<Author> Authors { get; set; }
         public Book()
         {
-            BookToAutors = new List<BookToAutors>();
+            Authors = new List<Author>();
         }
     }
 }

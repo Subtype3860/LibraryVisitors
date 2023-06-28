@@ -4,9 +4,9 @@ public class Author
 {
     public int Id { get; set; }
     public string? Name { get; set; }
-    public List<BookToAutors> BookToAutors { get; set; }
+    public List<Book> Books { get; set; }
     public Author() 
     {
-        BookToAutors = new List<BookToAutors>();
+        Books = new List<Book>();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace LibraryVisitors
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace LibraryVisitors
 {
     public class UserRepository
     {
@@ -77,6 +79,28 @@
             {
                 Console.WriteLine("Подльзователь не обнавлён");
             }
+        }
+        /// <summary>
+        /// Получать булевый флаг о том, есть ли определенная книга на руках у пользователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool FlagCountBookToUser(int userId)
+        {
+            var model = _contextApp.Users
+                .Include(i => i.Books).ToList();
+            return model.Count > 0;
+        }
+        /// <summary>
+        /// Получать количество книг на руках у пользователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int CountBookToUser(int userId)
+        {
+            var model = _contextApp.Users
+                .Include(i => i.Books).ToList().Count();
+            return model;
         }
     }
 }
