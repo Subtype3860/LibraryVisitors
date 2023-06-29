@@ -9,7 +9,10 @@ namespace LibraryVisitors
         {
             _contextApp = contextApp;
         }
-
+        /// <summary>
+        /// Выбор всех пользователей
+        /// </summary>
+        /// <returns></returns>
         public List<User> LibraryUser()
         {
             var model = _contextApp.Users.ToList();
@@ -23,7 +26,11 @@ namespace LibraryVisitors
                 throw;
             }
         }
-
+        /// <summary>
+        /// Выбор пользователя по Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User SelectUser(int id)
         {
             var model = _contextApp.Users.Find(id);
@@ -37,7 +44,10 @@ namespace LibraryVisitors
                 throw;
             }
         }
-
+        /// <summary>
+        /// Создание пользователя
+        /// </summary>
+        /// <param name="user"></param>
         public void CreateUser(User user)
         {
             var model = _contextApp.Users.First(f=>string.Equals(f.Name!, user.Name!, StringComparison.CurrentCultureIgnoreCase) 
@@ -52,6 +62,10 @@ namespace LibraryVisitors
                 Console.WriteLine("Пользователь с таким именем уже зарегестрирован");
             }
         }
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveUser(int id) 
         {
             var model = _contextApp.Users.Find(id);
@@ -65,6 +79,12 @@ namespace LibraryVisitors
                 Console.WriteLine("Подльзователь не найден");
             }
         }
+        /// <summary>
+        /// Обновление данных о пользователе
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
         public void UpdateUser(int id, string? name, string? email)
         {
             var model = _contextApp.Users.Find(id);

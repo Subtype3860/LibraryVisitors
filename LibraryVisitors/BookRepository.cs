@@ -9,7 +9,10 @@ namespace LibraryVisitors
         {
             _contextApp = contextApp;
         }
-
+        /// <summary>
+        /// Получение всех книг
+        /// </summary>
+        /// <returns></returns>
         public List<Book> LibraryBook()
         {
             var model = _contextApp.Books.ToList();
@@ -23,7 +26,11 @@ namespace LibraryVisitors
                 throw;
             }
         }
-
+        /// <summary>
+        /// Выбор книги по Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Book SelectBook(int id)
         {
             var model = _contextApp.Books.Find(id);
@@ -37,6 +44,10 @@ namespace LibraryVisitors
                 throw;
             }
         }
+        /// <summary>
+        /// Создание книги
+        /// </summary>
+        /// <param name="book"></param>
 
         public void CreateBoook(Book book)
         {
@@ -52,7 +63,10 @@ namespace LibraryVisitors
                 Console.WriteLine("Книга уже занесена в базу");
             }
         }
-
+        /// <summary>
+        /// Удаление книги
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveBook(int id)
         {
             var model = _contextApp.Books.Find(id);
@@ -66,7 +80,12 @@ namespace LibraryVisitors
                 Console.WriteLine("Книга не найдена");
             }
         }
-
+        /// <summary>
+        /// Обновление данных о книги
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="date"></param>
         public void UpdeteBook(int id, string? name, DateTime? date)
         {
             var model = _contextApp.Books.Find(id);
@@ -146,7 +165,27 @@ namespace LibraryVisitors
         /// <returns></returns>
         public List<Book> BooksMaxDate()
         {
-            
+            var date = _contextApp.Books.Max(d => d.Date);
+            var model = _contextApp.Books.Where(w => w.Date == date).ToList();
+            return model;
+        }
+        /// <summary>
+        /// Получение списка всех книг, отсортированного в алфавитном порядке по названию.
+        /// </summary>
+        /// <returns></returns>
+        public List<Book> BooksOrderASC() 
+        {
+            var model = _contextApp.Books.OrderBy(o=>o.Name).ToList();
+            return model;
+        }
+        /// <summary>
+        /// Получение списка всех книг, отсортированного в порядке убывания года их выхода.
+        /// </summary>
+        /// <returns></returns>
+        public List<Book > BooksOrderDESC() 
+        {
+            var model = _contextApp.Books.OrderByDescending(o=>o.Name).ToList();
+            return model;
         }
     }
     
